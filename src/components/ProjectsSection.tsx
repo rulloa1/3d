@@ -1,6 +1,5 @@
 import React, { useRef } from 'react';
 import { motion, useScroll, useTransform } from 'motion/react';
-import LiveProjectButton from './LiveProjectButton';
 import { ArrowUpRight } from 'lucide-react';
 
 const PROJECTS = [
@@ -153,13 +152,16 @@ function ProjectCard({ project, index, progress, range, targetScale }: ProjectCa
                 <span className="text-[10px] uppercase font-bold tracking-widest text-white/30">Client</span>
                 <span className="text-xs uppercase font-light tracking-widest">Confidential</span>
              </div>
-             <motion.button 
+             <motion.a
+                href="https://www.artstation.com/roryulloa"
+                target="_blank"
+                rel="noopener noreferrer"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 className="w-14 h-14 rounded-full bg-white text-black flex items-center justify-center hover:bg-white/90 transition-colors"
              >
                 <ArrowUpRight size={24} />
-             </motion.button>
+             </motion.a>
           </div>
         </div>
 

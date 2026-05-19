@@ -1,6 +1,5 @@
 import { motion, useScroll, useTransform, useInView } from 'motion/react';
 import { useRef, useEffect, useState } from 'react';
-import { FileDown } from 'lucide-react';
 import FadeIn from './FadeIn';
 import AnimatedText from './AnimatedText';
 import ContactButton from './ContactButton';
@@ -120,10 +119,6 @@ export default function AboutSection() {
                  
                  <div className="flex flex-wrap gap-4">
                     <ContactButton label="Let's Talk" />
-                    <button className="h-[52px] px-8 flex items-center justify-center gap-2 border border-white/10 hover:bg-white hover:text-black transition-all duration-500 rounded-full text-[10px] uppercase font-bold tracking-widest text-white/60">
-                       <FileDown className="w-4 h-4" />
-                       Download CV
-                    </button>
                  </div>
 
                  {/* Animated Stat Counters */}

@@ -34,8 +34,6 @@ export default function App() {
             
             <div className="flex gap-10">
               <a href="https://www.artstation.com/roryulloa" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors duration-300">ArtStation</a>
-              <a href="#" className="hover:text-white transition-colors duration-300">Instagram</a>
-              <a href="#" className="hover:text-white transition-colors duration-300">LinkedIn</a>
             </div>
           </div>
         </footer>
