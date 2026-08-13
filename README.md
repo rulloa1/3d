@@ -1,20 +1,33 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
-</div>
+# Rory Ulloa — Architectural Visualizer & 3D Artist
 
-# Run and deploy your AI Studio app
+A single-page portfolio for **Rory Ulloa**, presenting architectural visualization, 3D-art, and creative-direction work. The site is a static React application built with Vite, Tailwind CSS, Motion, Lenis, and Lucide.
 
-This contains everything you need to run your app locally.
+## Local development
 
-View your app in AI Studio: https://ai.studio/apps/248a632b-62d6-4b34-8a52-a4ba7f84a4dd
+The current application does **not** require API keys or runtime environment variables.
 
-## Run Locally
+```bash
+npm ci
+npm run dev
+```
 
-**Prerequisites:**  Node.js
+The development server listens on `http://localhost:3000` by default. To create and preview a production build, run:
 
+```bash
+npm run lint
+npm run build
+npm run preview
+```
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+## Project structure
+
+| Path | Purpose |
+|---|---|
+| `src/App.tsx` | Top-level portfolio composition |
+| `src/components/` | Portfolio sections and reusable interactions |
+| `src/index.css` | Global styling and Tailwind theme layers |
+| `vite.config.ts` | Vite, React, Tailwind, aliases, and development-server settings |
+
+## Deployment
+
+Deploy the generated `dist/` directory to any static hosting provider. Before publishing, verify the ArtStation project links and contact actions in the rendered site.
