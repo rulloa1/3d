@@ -27,7 +27,7 @@ All copy, links, skills, projects and services live in **`src/data/content.ts`**
 
 - Social / freelance profile links (LinkedIn, Upwork, etc.) and an optional resume
 - Optional pricing / turnaround for services
-- Canonical URL + absolute `og:image` URL in `index.html` once the site has a domain
+- If you move to a custom domain, update the canonical / `og:url` / `og:image` URLs in `index.html` and `base` in `vite.config.ts`
 - A personal touch on the bio paragraph
 
 Project thumbnails are real screenshots of each project, stored as WebP in `src/assets/projects/`.
@@ -47,9 +47,8 @@ Project thumbnails are real screenshots of each project, stored as WebP in `src/
 
 ## Deployment
 
-This repo currently has **no deployment configured** (no GitHub Pages, Vercel or Netlify setup), so merging to `main` does not publish anything by itself.
+Live at **https://rulloa1.github.io/3d/** (GitHub Pages, served from the `gh-pages` branch).
 
-It builds to a plain static `dist/` folder, so any static host works:
-
-- **Vercel / Netlify / Cloudflare Pages:** import the repo, build command `npm run build`, output directory `dist`. These will then auto-deploy on every push to `main`.
-- **GitHub Pages:** add a Pages workflow that runs `npm ci && npm run build` and uploads `dist/`. If served from `https://<user>.github.io/3d/`, set `base: '/3d/'` in `vite.config.ts`.
+- `vite.config.ts` sets `base: '/3d/'` so assets resolve under the `/3d/` subpath.
+- `.github/workflows/deploy.yml` builds on every push to `main` and publishes `dist/` to the `gh-pages` branch.
+- Manual deploy (e.g. if Actions is unavailable): `npm run build`, then push the contents of `dist/` (plus an empty `.nojekyll`) to the `gh-pages` branch.
