@@ -1,115 +1,124 @@
-import React, { useState } from 'react';
+import { useState, type FormEvent } from 'react';
+import { ArrowRight, Mail, MapPin, Phone } from 'lucide-react';
 import FadeIn from './FadeIn';
-import { motion } from 'motion/react';
+import { PROFILE } from '../data/content';
+
+const inputClass =
+  'w-full rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-3.5 text-base text-fg placeholder:text-white/35 transition-colors focus:border-accent focus:bg-white/[0.05] focus:outline-none';
 
 export default function ContactSection() {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    message: ''
-  });
+  const [form, setForm] = useState({ name: '', email: '', message: '' });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    const mailtoUrl = `mailto:RoryUlloa@gmail.com?subject=Inquiry from ${formData.name}&body=${formData.message}%0D%0A%0D%0AFrom: ${formData.name} (${formData.email})`;
-    window.location.href = mailtoUrl;
+    // Opens the visitor's email app with the details pre-filled (properly URL-encoded).
+    const subject = `Project inquiry from ${form.name}`;
+    const body = `${form.message}\n\nFrom: ${form.name} (${form.email})`;
+    window.location.href = `mailto:${PROFILE.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
   };
 
   return (
-    <section id="contact" className="min-h-screen bg-[#080808] flex flex-col items-center justify-center px-6 md:px-10 py-32 relative overflow-hidden">
-      <div className="max-w-6xl w-full relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 lg:gap-32">
-          {/* Left Column: Direct Info */}
-          <div className="flex flex-col justify-between py-4">
-            <FadeIn delay={0.2} x={-30}>
-              <div className="flex flex-col gap-6">
-                 <span className="text-[10px] uppercase tracking-[0.6em] text-white/30 font-bold">The Bridge</span>
-                 <h2 className="hero-heading font-black uppercase leading-[0.85] tracking-tighter" style={{ fontSize: 'clamp(3.5rem, 10vw, 150px)' }}>
-                    LET&apos;S<br />TALK
-                 </h2>
-                 <p className="text-white/40 font-light mt-8 max-w-sm leading-relaxed text-lg sm:text-xl">
-                    Ready to transform your architectural concepts into immersive 3D realities? Let&apos;s start a conversation.
-                 </p>
-              </div>
-            </FadeIn>
+    <section id="contact" aria-labelledby="contact-title" className="section-y relative overflow-hidden">
+      <div aria-hidden className="pointer-events-none absolute -bottom-40 -left-40 h-[30rem] w-[30rem] rounded-full bg-accent/10 blur-[150px]" />
 
-            <FadeIn delay={0.4} y={30}>
-              <div className="flex flex-col gap-8 mt-16 lg:mt-0">
-                 <div className="flex flex-col gap-2">
-                    <span className="text-[10px] uppercase tracking-[0.4em] text-white/20 font-bold">Enquiries</span>
-                    <a href="mailto:RoryUlloa@gmail.com" className="text-white font-display font-medium text-2xl md:text-3xl hover:opacity-70 transition-opacity">
-                      RoryUlloa@gmail.com
-                    </a>
-                 </div>
-                 <div className="flex flex-col gap-2">
-                    <span className="text-[10px] uppercase tracking-[0.4em] text-white/20 font-bold">Location</span>
-                    <span className="text-white/60 font-medium text-lg uppercase tracking-wider">
-                      Houston, Texas
-                    </span>
-                 </div>
-              </div>
-            </FadeIn>
-          </div>
+      <div className="container-x relative grid gap-14 lg:grid-cols-2 lg:gap-20">
+        <FadeIn>
+          <p className="eyebrow mb-5">Contact</p>
+          <h2 id="contact-title" className="section-title">
+            Let&apos;s build <span className="accent-text">something great.</span>
+          </h2>
+          <p className="mt-6 max-w-md text-lg leading-relaxed text-muted">
+            Need a new website, a bug fixed, or your site to finally work on phones? Tell me about your project and
+            I&apos;ll get back to you.
+          </p>
 
-          {/* Right Column: Form */}
-          <div className="relative">
-            <FadeIn delay={0.6} x={30}>
-               <form onSubmit={handleSubmit} className="flex flex-col gap-10">
-                  <div className="flex flex-col gap-4 group">
-                     <label htmlFor="name" className="text-[10px] uppercase tracking-[0.4em] text-white/20 font-bold group-focus-within:text-white transition-colors">Name</label>
-                     <input 
-                        type="text" 
-                        id="name"
-                        required
-                        value={formData.name}
-                        onChange={(e) => setFormData({...formData, name: e.target.value})}
-                        placeholder="Your Name"
-                        className="bg-transparent border-b border-white/10 py-5 text-white focus:outline-none focus:border-white transition-colors duration-500 placeholder:text-white/5 uppercase tracking-widest text-xs"
-                     />
-                  </div>
+          <ul className="mt-10 flex flex-col gap-4">
+            <li>
+              <a href={`mailto:${PROFILE.email}`} className="card group flex items-center gap-4 p-5 transition-colors hover:border-accent/50">
+                <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-accent/10 text-accent">
+                  <Mail size={20} aria-hidden />
+                </span>
+                <span>
+                  <span className="block text-xs font-semibold uppercase tracking-[0.18em] text-subtle">Email</span>
+                  <span className="block font-display text-lg font-semibold text-fg sm:text-xl">{PROFILE.email}</span>
+                </span>
+              </a>
+            </li>
+            <li>
+              <a href={PROFILE.phoneHref} className="card group flex items-center gap-4 p-5 transition-colors hover:border-accent/50">
+                <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-accent/10 text-accent">
+                  <Phone size={20} aria-hidden />
+                </span>
+                <span>
+                  <span className="block text-xs font-semibold uppercase tracking-[0.18em] text-subtle">Phone</span>
+                  <span className="block font-display text-lg font-semibold text-fg sm:text-xl">{PROFILE.phoneDisplay}</span>
+                </span>
+              </a>
+            </li>
+            <li className="flex items-center gap-4 px-5 py-2 text-muted">
+              <MapPin size={18} aria-hidden className="text-accent" /> {PROFILE.location} · available for remote work
+            </li>
+          </ul>
+        </FadeIn>
 
-                  <div className="flex flex-col gap-4 group">
-                     <label htmlFor="email" className="text-[10px] uppercase tracking-[0.4em] text-white/20 font-bold group-focus-within:text-white transition-colors">Email</label>
-                     <input 
-                        type="email" 
-                        id="email"
-                        required
-                        value={formData.email}
-                        onChange={(e) => setFormData({...formData, email: e.target.value})}
-                        placeholder="Your Email"
-                        className="bg-transparent border-b border-white/10 py-5 text-white focus:outline-none focus:border-white transition-colors duration-500 placeholder:text-white/5 uppercase tracking-widest text-xs"
-                     />
-                  </div>
-
-                  <div className="flex flex-col gap-4 group">
-                     <label htmlFor="message" className="text-[10px] uppercase tracking-[0.4em] text-white/20 font-bold group-focus-within:text-white transition-colors">Project Details</label>
-                     <textarea 
-                        id="message"
-                        required
-                        rows={5}
-                        value={formData.message}
-                        onChange={(e) => setFormData({...formData, message: e.target.value})}
-                        placeholder="Tell me about your project..."
-                        className="bg-transparent border-b border-white/10 py-5 text-white focus:outline-none focus:border-white transition-colors duration-500 placeholder:text-white/5 resize-none uppercase tracking-widest text-xs"
-                     />
-                  </div>
-
-                  <motion.button 
-                    whileHover={{ scale: 1.02, boxShadow: '0 20px 50px rgba(250, 46, 130, 0.2)' }}
-                    whileTap={{ scale: 0.98 }}
-                    type="submit"
-                    className="mt-6 w-full py-6 rounded-full bg-gradient-to-r from-[#FA2E82] to-[#B600A8] text-white font-black uppercase tracking-[0.5em] text-[10px] sm:text-xs transition-all duration-500 shadow-[0_10px_40px_rgba(250,46,130,0.15)]"
-                  >
-                    Send Inquiry
-                  </motion.button>
-               </form>
-            </FadeIn>
-          </div>
-        </div>
+        <FadeIn delay={0.1}>
+          <form onSubmit={handleSubmit} className="card flex flex-col gap-5 p-6 sm:p-8" aria-describedby="form-note">
+            <div className="flex flex-col gap-2">
+              <label htmlFor="name" className="text-sm font-medium text-fg">
+                Name
+              </label>
+              <input
+                id="name"
+                name="name"
+                type="text"
+                autoComplete="name"
+                required
+                value={form.name}
+                onChange={(e) => setForm({ ...form, name: e.target.value })}
+                placeholder="Jane Smith"
+                className={inputClass}
+              />
+            </div>
+            <div className="flex flex-col gap-2">
+              <label htmlFor="email" className="text-sm font-medium text-fg">
+                Email
+              </label>
+              <input
+                id="email"
+                name="email"
+                type="email"
+                autoComplete="email"
+                required
+                value={form.email}
+                onChange={(e) => setForm({ ...form, email: e.target.value })}
+                placeholder="you@company.com"
+                className={inputClass}
+              />
+            </div>
+            <div className="flex flex-col gap-2">
+              <label htmlFor="message" className="text-sm font-medium text-fg">
+                Project details
+              </label>
+              <textarea
+                id="message"
+                name="message"
+                required
+                rows={5}
+                value={form.message}
+                onChange={(e) => setForm({ ...form, message: e.target.value })}
+                placeholder="What do you need built, fixed or updated? Any deadline or budget?"
+                className={`${inputClass} resize-y`}
+              />
+            </div>
+            <button type="submit" className="btn btn-primary mt-2 w-full">
+              Send inquiry <ArrowRight size={18} aria-hidden />
+            </button>
+            <p id="form-note" className="text-center text-xs text-subtle">
+              Opens your email app with your message ready to send.
+            </p>
+          </form>
+        </FadeIn>
       </div>
-
-      {/* Decorative Glow */}
-      <div className="absolute bottom-[-10%] left-[-10%] w-[50%] h-[50%] rounded-full bg-white/[0.02] blur-[150px] pointer-events-none" />
     </section>
   );
 }

@@ -1,69 +1,58 @@
-import { useState, useRef, ReactNode, useEffect } from 'react';
+import { useEffect, useRef, useState, type ReactNode } from 'react';
 
 interface MagnetProps {
   children: ReactNode;
   padding?: number;
   strength?: number;
-  activeTransition?: string;
-  inactiveTransition?: string;
   className?: string;
 }
 
-export default function Magnet({
-  children,
-  padding = 150,
-  strength = 3,
-  activeTransition = "transform 0.3s ease-out",
-  inactiveTransition = "transform 0.6s ease-in-out",
-  className = ""
-}: MagnetProps) {
-  const [position, setPosition] = useState({ x: 0, y: 0 });
-  const [isHovering, setIsHovering] = useState(false);
-  const magnetRef = useRef<HTMLDivElement>(null);
+/**
+ * Subtle "magnetic" follow effect. Only enabled for fine pointers (mouse/trackpad)
+ * and when the user has not requested reduced motion. Updates are rAF-throttled.
+ */
+export default function Magnet({ children, padding = 150, strength = 3, className = '' }: MagnetProps) {
+  const [pos, setPos] = useState({ x: 0, y: 0 });
+  const [active, setActive] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      if (!magnetRef.current) return;
+    const canHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!canHover || reduced) return;
 
-      const rect = magnetRef.current.getBoundingClientRect();
-      const centerX = rect.left + rect.width / 2;
-      const centerY = rect.top + rect.height / 2;
-      
-      const distanceX = e.clientX - centerX;
-      const distanceY = e.clientY - centerY;
-      const distance = Math.sqrt(distanceX ** 2 + distanceY ** 2);
-
-      const threshold = Math.max(rect.width, rect.height) / 2 + padding;
-
-      if (distance < threshold) {
-        setIsHovering(true);
-        setPosition({
-          x: distanceX / strength,
-          y: distanceY / strength
-        });
-      } else {
-        setIsHovering(false);
-        setPosition({ x: 0, y: 0 });
-      }
+    let frame = 0;
+    const onMove = (e: MouseEvent) => {
+      cancelAnimationFrame(frame);
+      frame = requestAnimationFrame(() => {
+        const el = ref.current;
+        if (!el) return;
+        const r = el.getBoundingClientRect();
+        const dx = e.clientX - (r.left + r.width / 2);
+        const dy = e.clientY - (r.top + r.height / 2);
+        const inRange = Math.hypot(dx, dy) < Math.max(r.width, r.height) / 2 + padding;
+        setActive(inRange);
+        setPos(inRange ? { x: dx / strength, y: dy / strength } : { x: 0, y: 0 });
+      });
     };
-
-    window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
+    window.addEventListener('mousemove', onMove, { passive: true });
+    return () => {
+      cancelAnimationFrame(frame);
+      window.removeEventListener('mousemove', onMove);
+    };
   }, [padding, strength]);
 
   return (
     <div
-      ref={magnetRef}
-      className={`relative transition-transform pointer-events-none ${className}`}
+      ref={ref}
+      className={className}
       style={{
-        transform: `translate3d(${position.x}px, ${position.y}px, 0)`,
-        transition: isHovering ? activeTransition : inactiveTransition,
-        willChange: 'transform'
+        transform: `translate3d(${pos.x}px, ${pos.y}px, 0)`,
+        transition: active ? 'transform 0.3s ease-out' : 'transform 0.6s ease-in-out',
+        willChange: 'transform',
       }}
     >
-      <div className="pointer-events-auto">
-        {children}
-      </div>
+      {children}
     </div>
   );
 }
