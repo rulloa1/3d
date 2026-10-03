@@ -3,41 +3,40 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+import { MotionConfig } from 'motion/react';
+import Header from './components/Header';
 import HeroSection from './components/HeroSection';
-import MarqueeSection from './components/MarqueeSection';
+import TechMarquee from './components/TechMarquee';
 import AboutSection from './components/AboutSection';
-import ServicesSection from './components/ServicesSection';
+import SkillsSection from './components/SkillsSection';
 import ProjectsSection from './components/ProjectsSection';
+import ServicesSection from './components/ServicesSection';
 import ContactSection from './components/ContactSection';
+import Footer from './components/Footer';
 import SmoothScroll from './components/SmoothScroll';
 
 export default function App() {
   return (
-    <div className="relative selection:bg-[#B600A8] selection:text-white">
+    <MotionConfig reducedMotion="user">
       <SmoothScroll />
-      <div className="noise" />
-      <main className="main-wrapper">
+      <a
+        href="#main"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:rounded-full focus:bg-fg focus:px-5 focus:py-3 focus:text-ink"
+      >
+        Skip to content
+      </a>
+      <div aria-hidden className="noise" />
+      <Header />
+      <main id="main" className="relative overflow-x-clip">
         <HeroSection />
-        <MarqueeSection />
+        <TechMarquee />
         <AboutSection />
-        <ServicesSection />
+        <SkillsSection />
         <ProjectsSection />
+        <ServicesSection />
         <ContactSection />
-        
-        {/* Simple Footer */}
-        <footer className="bg-[#0C0C0C] py-20 px-10 border-t border-white/5">
-          <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8 text-white/30 text-[10px] uppercase tracking-[0.3em] font-light">
-            <div className="flex flex-col items-center md:items-start gap-2">
-              <span>&copy; {new Date().getFullYear()} RORY ULLOA.</span>
-              <span className="text-[8px] opacity-50 font-medium">Architectural Visualizer & 3D Artist</span>
-            </div>
-            
-            <div className="flex gap-10">
-              <a href="https://www.artstation.com/roryulloa" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors duration-300">ArtStation</a>
-            </div>
-          </div>
-        </footer>
       </main>
-    </div>
+      <Footer />
+    </MotionConfig>
   );
 }
