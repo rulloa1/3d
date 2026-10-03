@@ -4,7 +4,7 @@
   --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
   --font-display: "Syne", "Inter", ui-sans-serif, system-ui, sans-serif;
 
-  /* Palette: near-black surfaces, cool off-white text, brand pink -> magenta accent */
+  /* Palette: near-black surfaces, cool off-white text, brand red accent (complements the avatar's red jacket) */
   --color-ink: #07080a;
   --color-surface: #0e1014;
   --color-surface-2: #14171c;
@@ -12,8 +12,8 @@
   --color-fg: #eef1f4;
   --color-muted: #a6afb8; /* ~8.6:1 on ink */
   --color-subtle: #7d8791; /* ~5.2:1 on ink, for small labels */
-  --color-accent: #fa2e82; /* ~5.4:1 on ink */
-  --color-accent-2: #b600a8;
+  --color-accent: #e11d2e; /* ~4.2:1 on ink: icons, large text, buttons (white text ~4.8:1) */
+  --color-accent-2: #b91c1c; /* darker red for gradient ends / hover */
 }
 
 @layer base {
@@ -92,7 +92,7 @@
   }
 
   .accent-text {
-    background: linear-gradient(90deg, var(--color-accent), #ff7ab3);
+    background: linear-gradient(90deg, var(--color-accent), #f04452);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -103,7 +103,7 @@
   }
 
   .btn-primary {
-    @apply bg-gradient-to-r from-accent to-accent-2 text-white shadow-[0_10px_40px_-10px_rgba(250,46,130,0.6)] hover:-translate-y-0.5 hover:shadow-[0_16px_50px_-10px_rgba(250,46,130,0.75)];
+    @apply bg-gradient-to-r from-accent to-accent-2 text-white shadow-[0_10px_40px_-10px_rgba(225,29,46,0.6)] hover:-translate-y-0.5 hover:shadow-[0_16px_50px_-10px_rgba(225,29,46,0.75)];
   }
 
   .btn-ghost {

@@ -4,6 +4,8 @@ import path from 'path';
 import { defineConfig } from 'vite';
 
 export default defineConfig({
+    // Served from https://rulloa1.github.io/3d/ on GitHub Pages.
+    base: '/3d/',
     plugins: [react(), tailwindcss()],
     resolve: {
       alias: {
