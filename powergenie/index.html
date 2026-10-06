@@ -39,8 +39,10 @@
     <a href="#hero" data-dot="hero" aria-label="Intro"></a>
     <a href="#rate" data-dot="rate" aria-label="Lock in your rate"></a>
     <a href="#reliable" data-dot="reliable" aria-label="Reliable energy"></a>
+    <a href="#sunset" data-dot="sunset" aria-label="From sunset to blackout"></a>
     <a href="#backup" data-dot="backup" aria-label="Battery backup"></a>
     <a href="#how" data-dot="how" aria-label="How it works"></a>
+    <a href="#look" data-dot="look" aria-label="Take a look around"></a>
     <a href="#horace" data-dot="horace" aria-label="Meet Horace"></a>
     <a href="#quote" data-dot="quote" aria-label="Get a quote"></a>
   </nav>
@@ -92,8 +94,8 @@
       </div>
     </section>
 
-    <!-- B: RELIABLE -->
-    <section id="reliable" class="panel left" data-scene="reliable">
+    <!-- B: RELIABLE (scroll-triggered video: plays once on enter, freezes on last frame) -->
+    <section id="reliable" class="panel media-split media-section" data-gl="off">
       <div class="card glass reveal">
         <p class="eyebrow">02 · Reliable energy</p>
         <h2>Sunlight in. Power flows.</h2>
@@ -104,12 +106,52 @@
           <li>Less dependence on the grid alone</li>
         </ul>
       </div>
+      <figure class="media reveal" data-module="scroll-video">
+        <video muted playsinline preload="none" disablepictureinpicture aria-label="Slow push-in on rooftop solar panels in bright sunshine"
+          data-src="assets/media/panels-pushin.mp4" data-poster="assets/media/panels-poster.webp" data-still="assets/media/panels-end.webp"></video>
+        <figcaption class="ai-cap">AI-generated illustrative photo</figcaption>
+      </figure>
     </section>
 
-    <!-- C: BACKUP -->
-    <section id="backup" class="panel right" data-scene="backup">
+    <!-- C1: SCROLL SCRUB (sunset to blackout) -->
+    <section id="sunset" class="scrub" data-gl="off" data-module="scroll-scrub">
+      <div class="scrub-sticky">
+        <video class="scrub-video" muted playsinline preload="none" disablepictureinpicture aria-label="The same solar home going from sunset to night during a neighborhood blackout"
+          data-src="assets/media/house-dusk.mp4" data-poster="assets/media/house-dusk-poster.webp" data-still="assets/media/house-dusk-end.webp"></video>
+        <div class="scrub-shade" aria-hidden="true"></div>
+        <div class="scrub-copy glass">
+          <p class="eyebrow">03 · From sunset to blackout</p>
+          <div class="scrub-steps">
+            <h2 class="step is-on" data-until="0.40">The sun goes down.</h2>
+            <h2 class="step" data-until="0.72">Then the grid goes down.</h2>
+            <h2 class="step" data-until="1.01">With a battery, solar can protect you during blackouts.</h2>
+          </div>
+          <div class="scrub-bar" aria-hidden="true"><span></span></div>
+          <p class="scrub-hint">Keep scrolling</p>
+        </div>
+        <p class="ai-cap">AI-generated illustrative photo</p>
+      </div>
+    </section>
+
+    <!-- C2: BATTERY BACKUP (image reveal) -->
+    <section id="backup" class="panel media-split flip media-section" data-gl="off">
+      <figure class="media rv reveal" data-module="reveal">
+        <div class="rv-stage" role="img" aria-label="Interactive comparison: the home at golden hour, and the same home lit at night while the neighbors are dark">
+          <picture>
+            <source type="image/webp" srcset="assets/media/house-night.webp" />
+            <img class="rv-under" src="assets/media/house-night.jpg" alt="" width="1920" height="1080" loading="lazy" decoding="async" />
+          </picture>
+          <picture>
+            <source type="image/webp" srcset="assets/media/house-day.webp" />
+            <img class="rv-over" src="assets/media/house-day.jpg" alt="" width="1920" height="1080" loading="lazy" decoding="async" />
+          </picture>
+          <span class="rv-hint"><span class="mouse-hint">Move your cursor to see the blackout</span><span class="touch-hint">Touch and drag to see the blackout</span></span>
+          <button class="rv-toggle" type="button" aria-pressed="false">Show the blackout</button>
+        </div>
+        <figcaption class="ai-cap">AI-generated illustrative photo</figcaption>
+      </figure>
       <div class="card glass reveal">
-        <p class="eyebrow">03 · Battery backup</p>
+        <p class="eyebrow">04 · Battery backup</p>
         <h2>When the block goes dark, you don't have to.</h2>
         <p>Add a battery and solar can help protect you during blackouts. While the neighborhood loses power, your home can keep the lights on.</p>
         <div class="status">
@@ -122,7 +164,7 @@
     <!-- D: HOW -->
     <section id="how" class="panel wide" data-scene="how">
       <div class="how reveal">
-        <p class="eyebrow center">04 · How it works</p>
+        <p class="eyebrow center">05 · How it works</p>
         <h2 class="center">Going solar, made easy.</h2>
         <ol class="steps">
           <li class="glass"><span class="num">1</span><h3>Request your quote</h3><p>Start on Sunrun's referral page. It takes a minute.</p></li>
@@ -131,6 +173,22 @@
           <li class="glass"><span class="num">4</span><h3>Run on sunshine</h3><p>Lock in your rate and enjoy more reliable energy.</p></li>
         </ol>
       </div>
+    </section>
+
+    <!-- LOOK AROUND (mouse scrub: cursor X / touch drag controls the frame) -->
+    <section id="look" class="panel media-wide media-section" data-gl="off">
+      <div class="look-head reveal">
+        <p class="eyebrow center">Take a look around</p>
+        <h2 class="center">The battery behind the backup.</h2>
+        <p class="center sub">With a battery, solar can protect you during blackouts. Move across the photo to look around a home battery setup.</p>
+      </div>
+      <figure class="media ms reveal" data-module="mouse-scrub">
+        <video muted playsinline preload="none" disablepictureinpicture aria-label="Panning view of a white home battery on a garage wall beside an electrical panel"
+          data-src="assets/media/battery-pan.mp4" data-poster="assets/media/battery-poster.webp"></video>
+        <span class="ms-hint"><span class="mouse-hint">&larr; Move your cursor to look around &rarr;</span><span class="touch-hint">&larr; Drag to look around &rarr;</span></span>
+        <span class="ms-track" aria-hidden="true"><span></span></span>
+        <figcaption class="ai-cap">AI-generated illustrative photo</figcaption>
+      </figure>
     </section>
 
     <!-- MEET HORACE -->
@@ -169,5 +227,6 @@
   </footer>
 
   <script type="module" src="assets/main.js"></script>
+  <script type="module" src="assets/modules.js"></script>
 </body>
 </html>

@@ -163,6 +163,76 @@ blockquote{color:var(--text);font-size:1.03rem;line-height:1.7;border-left:3px s
 .reveal{opacity:0;transform:translateY(40px);transition:opacity 1s ease,transform 1s cubic-bezier(.2,.7,.2,1)}
 .reveal.in{opacity:1;transform:none}
 
+/* ===== v2: WebGL handoff ===== */
+#scene,.scene-fallback{transition:opacity .9s ease}
+html.gl-off #scene,html.gl-off .scene-fallback{opacity:0}
+.media-section{background:radial-gradient(55% 60% at 70% 50%,rgba(255,138,61,.10),transparent 70%),radial-gradient(50% 50% at 20% 60%,rgba(59,42,122,.25),transparent 70%)}
+
+/* Shared media frame */
+.media{position:relative;margin:0;width:100%;max-width:980px;aspect-ratio:16/9;border-radius:24px;overflow:hidden;background:#0a1230;
+  border:1px solid var(--glass-border);box-shadow:0 40px 100px -30px rgba(0,0,0,.75),0 0 80px -40px rgba(255,160,80,.35)}
+.media video,.media img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.media video{background:#0a1230}
+.ai-cap{position:absolute;top:10px;right:12px;z-index:5;margin:0;font-size:.68rem;letter-spacing:.03em;color:rgba(255,255,255,.85);
+  background:rgba(4,10,28,.5);padding:4px 10px;border-radius:999px;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);pointer-events:none}
+@media (hover:none){.mouse-hint{display:none}}
+@media (hover:hover){.touch-hint{display:none}}
+
+/* Split layout: copy card + media */
+.panel.media-split{display:grid;grid-template-columns:minmax(300px,440px) minmax(0,1fr);gap:clamp(24px,4vw,56px);align-items:center;justify-content:center}
+.panel.media-split.flip{grid-template-columns:minmax(0,1fr) minmax(300px,440px)}
+.media-split .card{max-width:440px}
+.media-split.media-missing{grid-template-columns:minmax(300px,520px)}
+
+/* 1) Reveal */
+.rv-stage{position:absolute;inset:0;cursor:crosshair;touch-action:pan-y;--x:50%;--y:50%;--r:0px}
+.rv-over{-webkit-mask-image:radial-gradient(circle at var(--x) var(--y),transparent 0,transparent calc(var(--r)*.58),#000 var(--r));
+  mask-image:radial-gradient(circle at var(--x) var(--y),transparent 0,transparent calc(var(--r)*.58),#000 var(--r))}
+.rv-hint,.ms-hint{position:absolute;left:50%;bottom:16px;transform:translateX(-50%);z-index:4;padding:8px 16px;border-radius:999px;font-size:.86rem;white-space:nowrap;
+  background:rgba(4,10,28,.55);border:1px solid rgba(255,255,255,.14);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);transition:opacity .5s;pointer-events:none}
+.rv-stage.active .rv-hint{opacity:0}
+.rv-toggle{display:none;position:absolute;left:14px;top:12px;z-index:5;font:600 .85rem var(--ff-body);color:#1a0f05;border:0;border-radius:999px;padding:9px 16px;
+  background:linear-gradient(135deg,#ffe7a8,#ff9f4a);cursor:pointer}
+.rv.rm .rv-toggle,.rv-stage:focus-within .rv-toggle{display:inline-flex}
+.rv.rm .rv-over{-webkit-mask-image:none;mask-image:none}
+.rv.show-night .rv-over{opacity:0}
+.rv.rm .rv-hint{display:none}
+.rv.rm .rv-stage{cursor:default}
+
+/* 3) Mouse scrub */
+.panel.media-wide{flex-direction:column;justify-content:center;gap:32px}
+.look-head{max-width:680px}
+.look-head h2{font-size:clamp(2rem,4vw,3.1rem);margin-bottom:12px}
+.look-head .sub{color:var(--muted)}
+.ms{cursor:ew-resize;touch-action:pan-y}
+.ms.touched .ms-hint{opacity:0}
+.ms-track{position:absolute;left:0;right:0;bottom:0;height:3px;z-index:4;background:rgba(255,255,255,.12)}
+.ms-track span{display:block;height:100%;width:50%;background:linear-gradient(90deg,#ffd27a,#ff8a3d)}
+.ms.rm .ms-hint,.ms.rm .ms-track{display:none}
+.ms.rm{cursor:default}
+
+/* 4) Scroll scrub */
+.scrub{position:relative;z-index:2;height:320vh}
+.scrub-sticky{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;background:#060d24}
+.scrub-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 50%}
+.scrub-shade{position:absolute;inset:0;pointer-events:none;background:
+  linear-gradient(180deg,rgba(4,10,28,.85) 0,rgba(4,10,28,0) 16%),
+  linear-gradient(0deg,rgba(4,10,28,.7) 0,rgba(4,10,28,0) 28%),
+  linear-gradient(90deg,rgba(4,10,28,.7) 0,rgba(4,10,28,.15) 45%,rgba(4,10,28,0) 70%)}
+.scrub-copy{position:absolute;left:clamp(18px,6vw,96px);top:50%;transform:translateY(-50%);width:min(460px,calc(100% - 36px));padding:28px 32px;border-radius:var(--radius)}
+.scrub-steps{display:grid}
+.step{grid-area:1/1;font-size:clamp(1.6rem,3vw,2.4rem);opacity:0;transform:translateY(14px);transition:opacity .6s ease,transform .6s ease}
+.step.is-on{opacity:1;transform:none}
+.scrub-bar{height:3px;margin-top:22px;border-radius:3px;background:rgba(255,255,255,.15);overflow:hidden}
+.scrub-bar span{display:block;height:100%;width:0;background:linear-gradient(90deg,#ffd27a,#ff8a3d)}
+.scrub-hint{margin-top:12px;font-size:.8rem;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;transition:opacity .5s}
+.scrub.scrolled .scrub-hint{opacity:0}
+.scrub .ai-cap{top:auto;bottom:16px;right:16px}
+.scrub.rm{height:auto}
+.scrub.rm .scrub-sticky{position:relative;height:auto;min-height:100vh}
+.scrub.rm .step{grid-area:auto;opacity:1;transform:none;font-size:clamp(1.2rem,2.2vw,1.6rem);margin-bottom:8px}
+.scrub.rm .scrub-bar,.scrub.rm .scrub-hint{display:none}
+
 /* Responsive */
 @media (max-width:1000px){.steps{grid-template-columns:repeat(2,1fr)}}
 @media (max-width:768px){
@@ -191,4 +261,21 @@ blockquote{color:var(--text);font-size:1.03rem;line-height:1.7;border-left:3px s
   *,*::before,*::after{animation:none!important;transition:none!important}
   .reveal{opacity:1;transform:none}
   .chart .line{stroke-dashoffset:0}.chart .area,.chart .dot{opacity:1}
+}
+
+
+/* v2 mobile */
+@media (max-width:900px){
+  .panel.media-split,.panel.media-split.flip{grid-template-columns:1fr;justify-items:center;align-content:center}
+  .media-split.flip .card{order:2}
+  .media-split .card{max-width:640px}
+}
+@media (max-width:768px){
+  .panel.media-split{align-items:center;padding:88px 16px 48px;gap:18px}
+  .panel.media-wide{padding:88px 16px 48px;gap:20px}
+  .media{border-radius:18px}
+  .rv-hint,.ms-hint{font-size:.78rem;padding:7px 12px;bottom:12px}
+  .scrub-copy{left:16px;right:16px;width:auto;top:auto;bottom:24px;transform:none;padding:20px 22px}
+  .scrub .ai-cap{top:84px;bottom:auto;right:12px}
+  .scrub-video{object-position:48% 50%}
 }

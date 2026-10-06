@@ -27,8 +27,8 @@ function initUI() {
     entries.forEach((e) => {
       if (e.isIntersecting) dots.forEach((d) => d.classList.toggle('active', d.dataset.dot === e.target.id));
     });
-  }, { threshold: 0.5 });
-  document.querySelectorAll('[data-scene]').forEach((s) => dotIO.observe(s));
+  }, { rootMargin: '-50% 0px -50% 0px', threshold: 0 });
+  document.querySelectorAll('main > section').forEach((s) => dotIO.observe(s));
 }
 
 function hasWebGL() {
@@ -134,7 +134,7 @@ function initScene() {
   sunLight.shadow.bias = -0.0008;
   scene.add(sunLight); scene.add(sunLight.target);
   const fill = new THREE.DirectionalLight(0xffe2c4, 0.8); fill.position.set(12, 18, 40); scene.add(fill);
-  const homeGlow = new THREE.PointLight(0xffb15c, 0, 30, 1.6); homeGlow.position.set(0, 3, 5.5); scene.add(homeGlow);
+  const homeGlow = new THREE.PointLight(0xffb15c, 0, 12, 1.4); homeGlow.position.set(0, 3, 5.5); scene.add(homeGlow);
 
   /* Sun */
   const sunGroup = new THREE.Group(); scene.add(sunGroup);
@@ -500,11 +500,14 @@ function initScene() {
     if (firstFrame) { firstFrame = false; requestAnimationFrame(() => hideLoader()); }
   }
 
+  // Pause rendering while full-bleed media sections hide the canvas (html.gl-off, set by modules.js)
+  let glOffSince = 0;
   function loop() {
     const dt = Math.min(clock.getDelta(), 0.05);
     time += dt;
-    update(dt);
-    render();
+    const off = document.documentElement.classList.contains('gl-off');
+    if (off) { if (!glOffSince) glOffSince = performance.now(); } else glOffSince = 0;
+    if (!off || performance.now() - glOffSince < 1000) { update(dt); render(); }
     requestAnimationFrame(loop);
   }
 
