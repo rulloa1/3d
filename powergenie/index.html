@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Horace Lawrence · Sunrun Solar Expert | Power your home with the sun</title>
+  <meta name="description" content="Go solar with Horace Lawrence, The Block Sales Expert and Team Lead at Sunrun. Lock in a rate, get more reliable energy, and with a battery, protect your home during blackouts." />
+  <meta name="theme-color" content="#060d24" />
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/style.css" />
+  <script type="importmap">
+  { "imports": { "three": "https://unpkg.com/three@0.160.0/build/three.module.js" } }
+  </script>
+</head>
+<body>
+  <!-- Loading screen -->
+  <div id="loader" role="status" aria-live="polite">
+    <div class="loader-sun"></div>
+    <p class="loader-text">Catching the first light…</p>
+  </div>
+
+  <!-- 3D scene (fixed background) -->
+  <canvas id="scene" aria-hidden="true"></canvas>
+  <div class="scene-fallback" aria-hidden="true"></div>
+  <div class="vignette" aria-hidden="true"></div>
+
+  <header class="topbar">
+    <a class="brand" href="#hero" aria-label="Back to top">
+      <span class="brand-dot"></span>
+      <span>Horace Lawrence <em>· Sunrun Solar</em></span>
+    </a>
+    <a class="btn btn-small" href="https://sunrun.my.salesforce-sites.com/purl/?srep=/powergenie" target="_blank" rel="noopener">Free quote</a>
+  </header>
+
+  <nav class="dots" aria-label="Sections">
+    <a href="#hero" data-dot="hero" aria-label="Intro"></a>
+    <a href="#rate" data-dot="rate" aria-label="Lock in your rate"></a>
+    <a href="#reliable" data-dot="reliable" aria-label="Reliable energy"></a>
+    <a href="#backup" data-dot="backup" aria-label="Battery backup"></a>
+    <a href="#how" data-dot="how" aria-label="How it works"></a>
+    <a href="#horace" data-dot="horace" aria-label="Meet Horace"></a>
+    <a href="#quote" data-dot="quote" aria-label="Get a quote"></a>
+  </nav>
+
+  <main>
+    <!-- HERO -->
+    <section id="hero" class="panel hero" data-scene="hero">
+      <div class="hero-inner reveal">
+        <p class="eyebrow">Sunrise starts here</p>
+        <h1>Power your home<br /><span class="grad">with the sun.</span></h1>
+        <p class="hero-sub">Horace Lawrence, <strong>Sunrun Solar Expert</strong></p>
+        <div class="cta-row">
+          <a class="btn btn-primary" href="https://sunrun.my.salesforce-sites.com/purl/?srep=/powergenie" target="_blank" rel="noopener">Get my free solar quote <span aria-hidden="true">→</span></a>
+          <a class="btn btn-ghost" href="#rate">See how it works</a>
+        </div>
+      </div>
+      <a class="scroll-cue" href="#rate" aria-label="Scroll down"><span></span></a>
+    </section>
+
+    <!-- A: RATE -->
+    <section id="rate" class="panel right" data-scene="rate">
+      <div class="card glass reveal">
+        <p class="eyebrow">01 · Lock in your rate</p>
+        <h2>Step off the rising-cost rollercoaster.</h2>
+        <p>Going solar lets you lock in a rate to avoid rising utility costs, so your energy bill stops chasing the grid.</p>
+        <figure class="chart" aria-label="Illustrative chart: utility costs rising over time versus a flat, locked-in solar rate">
+          <svg viewBox="0 0 400 230" role="img">
+            <defs>
+              <linearGradient id="gUtil" x1="0" x2="1"><stop offset="0" stop-color="#ff9a5c"/><stop offset="1" stop-color="#ff4d6d"/></linearGradient>
+              <linearGradient id="gSolar" x1="0" x2="1"><stop offset="0" stop-color="#ffd27a"/><stop offset="1" stop-color="#ffe7a8"/></linearGradient>
+              <linearGradient id="gFill" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ff4d6d" stop-opacity=".28"/><stop offset="1" stop-color="#ff4d6d" stop-opacity="0"/></linearGradient>
+            </defs>
+            <g class="grid">
+              <line x1="30" y1="40" x2="390" y2="40"/><line x1="30" y1="90" x2="390" y2="90"/><line x1="30" y1="140" x2="390" y2="140"/><line x1="30" y1="190" x2="390" y2="190"/>
+            </g>
+            <path class="area" d="M30 175 C 120 168, 190 150, 250 115 S 350 50, 388 26 L388 190 L30 190 Z" fill="url(#gFill)"/>
+            <path class="line util" d="M30 175 C 120 168, 190 150, 250 115 S 350 50, 388 26" stroke="url(#gUtil)"/>
+            <path class="line solar" d="M30 150 L388 150" stroke="url(#gSolar)"/>
+            <circle class="dot util-dot" cx="388" cy="26" r="5"/>
+            <circle class="dot solar-dot" cx="388" cy="150" r="5"/>
+            <text x="30" y="214" class="axis">Today</text><text x="388" y="214" class="axis" text-anchor="end">Years ahead →</text>
+          </svg>
+          <figcaption>
+            <span><i class="sw util"></i>Utility costs, rising</span>
+            <span><i class="sw solar"></i>Your locked-in solar rate</span>
+            <small>Illustration only, not to scale.</small>
+          </figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- B: RELIABLE -->
+    <section id="reliable" class="panel left" data-scene="reliable">
+      <div class="card glass reveal">
+        <p class="eyebrow">02 · Reliable energy</p>
+        <h2>Sunlight in. Power flows.</h2>
+        <p>Panels on your own roof turn sunlight into electricity right where you use it, giving you a more reliable source of energy for your home.</p>
+        <ul class="ticks">
+          <li>Energy made on your roof</li>
+          <li>Used right in your home</li>
+          <li>Less dependence on the grid alone</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- C: BACKUP -->
+    <section id="backup" class="panel right" data-scene="backup">
+      <div class="card glass reveal">
+        <p class="eyebrow">03 · Battery backup</p>
+        <h2>When the block goes dark, you don't have to.</h2>
+        <p>Add a battery and solar can help protect you during blackouts. While the neighborhood loses power, your home can keep the lights on.</p>
+        <div class="status">
+          <span class="pill off"><i></i>Grid: outage</span>
+          <span class="pill on"><i></i>Your home: powered by battery</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- D: HOW -->
+    <section id="how" class="panel wide" data-scene="how">
+      <div class="how reveal">
+        <p class="eyebrow center">04 · How it works</p>
+        <h2 class="center">Going solar, made easy.</h2>
+        <ol class="steps">
+          <li class="glass"><span class="num">1</span><h3>Request your quote</h3><p>Start on Sunrun's referral page. It takes a minute.</p></li>
+          <li class="glass"><span class="num">2</span><h3>Chat with Horace</h3><p>Talk through your home, your goals, and your questions.</p></li>
+          <li class="glass"><span class="num">3</span><h3>Get your plan</h3><p>See a solar option designed around your home, with or without a battery.</p></li>
+          <li class="glass"><span class="num">4</span><h3>Run on sunshine</h3><p>Lock in your rate and enjoy more reliable energy.</p></li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- MEET HORACE -->
+    <section id="horace" class="panel center" data-scene="horace">
+      <article class="card glass profile reveal">
+        <div class="avatar" aria-hidden="true">
+          <svg viewBox="0 0 120 120"><defs><linearGradient id="av" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffd27a"/><stop offset=".55" stop-color="#ff8a3d"/><stop offset="1" stop-color="#3b2a7a"/></linearGradient></defs><circle cx="60" cy="60" r="58" fill="url(#av)"/><circle cx="60" cy="60" r="50" fill="#0b1633" opacity=".35"/><text x="60" y="73" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-weight="700" font-size="40" fill="#fff">HL</text></svg>
+        </div>
+        <div class="profile-body">
+          <p class="eyebrow">Meet your solar expert</p>
+          <h2>Horace Lawrence</h2>
+          <p class="role">The Block Sales Expert, Team Lead · Sunrun</p>
+          <blockquote>“Hi, I'm Horace! I'm dedicated to making the process of going solar as easy as possible. Why solar? Because it lets you lock in a rate to avoid rising utility costs, gives you a more reliable source of energy, and (with a battery) can protect you during blackouts. I'd love to chat with you or your friends about how Sunrun could improve your life!”</blockquote>
+          <div class="contact">
+            <a class="btn btn-glass" href="tel:5102417007"><span aria-hidden="true">✆</span> Call 510-241-7007</a>
+            <a class="btn btn-glass" href="mailto:horace.lawrence@sunrun.com"><span aria-hidden="true">✉</span> horace.lawrence@sunrun.com</a>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <!-- FINAL CTA -->
+    <section id="quote" class="panel center final" data-scene="quote">
+      <div class="final-inner reveal">
+        <p class="eyebrow center">Your sunrise is waiting</p>
+        <h2 class="big">Ready to power your home<br /><span class="grad">with the sun?</span></h2>
+        <a class="btn btn-primary btn-huge" href="https://sunrun.my.salesforce-sites.com/purl/?srep=/powergenie" target="_blank" rel="noopener">Get my free solar quote <span aria-hidden="true">↗</span></a>
+        <p class="fine">Opens Horace's official Sunrun referral page in a new tab, where you can submit your info.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>Independent page for Horace Lawrence, Sunrun sales representative.</p>
+    <p class="tiny"><a href="tel:5102417007">510-241-7007</a> · <a href="mailto:horace.lawrence@sunrun.com">horace.lawrence@sunrun.com</a></p>
+  </footer>
+
+  <script type="module" src="assets/main.js"></script>
+</body>
+</html>
