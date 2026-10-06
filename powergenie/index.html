@@ -94,9 +94,12 @@
       </div>
     </section>
 
-    <!-- B: RELIABLE (scroll-triggered video: plays once on enter, freezes on last frame) -->
-    <section id="reliable" class="panel media-split media-section" data-gl="off">
-      <div class="card glass reveal">
+    <!-- B: RELIABLE (scroll-triggered video: one downward gesture plays it fully, input locked, freezes on last frame) -->
+    <section id="reliable" class="stv" data-gl="off" data-module="scroll-video">
+      <video class="stv-video" muted playsinline preload="none" disablepictureinpicture aria-label="Slow push-in on rooftop solar panels in bright sunshine"
+        data-src="assets/media/panels-pushin.mp4" data-poster="assets/media/panels-poster.webp" data-still="assets/media/panels-end.webp"></video>
+      <div class="stv-shade" aria-hidden="true"></div>
+      <div class="stv-copy glass reveal">
         <p class="eyebrow">02 · Reliable energy</p>
         <h2>Sunlight in. Power flows.</h2>
         <p>Panels on your own roof turn sunlight into electricity right where you use it, giving you a more reliable source of energy for your home.</p>
@@ -105,12 +108,9 @@
           <li>Used right in your home</li>
           <li>Less dependence on the grid alone</li>
         </ul>
+        <p class="stv-hint"><span class="mouse-hint">Scroll once to power up &darr;</span><span class="touch-hint">Swipe up once to power up</span></p>
       </div>
-      <figure class="media reveal" data-module="scroll-video">
-        <video muted playsinline preload="none" disablepictureinpicture aria-label="Slow push-in on rooftop solar panels in bright sunshine"
-          data-src="assets/media/panels-pushin.mp4" data-poster="assets/media/panels-poster.webp" data-still="assets/media/panels-end.webp"></video>
-        <figcaption class="ai-cap">AI-generated illustrative photo</figcaption>
-      </figure>
+      <p class="ai-cap">AI-generated illustrative photo</p>
     </section>
 
     <!-- C1: SCROLL SCRUB (sunset to blackout) -->

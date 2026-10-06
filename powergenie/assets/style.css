@@ -171,7 +171,8 @@ html.gl-off #scene,html.gl-off .scene-fallback{opacity:0}
 /* Shared media frame */
 .media{position:relative;margin:0;width:100%;max-width:980px;aspect-ratio:16/9;border-radius:24px;overflow:hidden;background:#0a1230;
   border:1px solid var(--glass-border);box-shadow:0 40px 100px -30px rgba(0,0,0,.75),0 0 80px -40px rgba(255,160,80,.35)}
-.media video,.media img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.media video,.media img{position:absolute;inset:0;width:100%;height:100%;display:block;
+  object-fit:cover; /* fill the frame; use object-fit:contain to show the whole frame (letterboxed) instead */}
 .media video{background:#0a1230}
 .ai-cap{position:absolute;top:10px;right:12px;z-index:5;margin:0;font-size:.68rem;letter-spacing:.03em;color:rgba(255,255,255,.85);
   background:rgba(4,10,28,.5);padding:4px 10px;border-radius:999px;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);pointer-events:none}
@@ -184,10 +185,30 @@ html.gl-off #scene,html.gl-off .scene-fallback{opacity:0}
 .media-split .card{max-width:440px}
 .media-split.media-missing{grid-template-columns:minmax(300px,520px)}
 
+/* 2) Scroll-triggered video section (full viewport) */
+html{scrollbar-gutter:stable} /* no width jump when the page is briefly locked */
+html.scroll-locked{overflow:hidden}
+.stv{position:relative;z-index:2;height:100vh;height:100svh;min-height:520px;overflow:hidden;background:#060d24}
+.stv-video{position:absolute;inset:0;width:100%;height:100%;
+  object-fit:cover; /* fill the viewport; switch to object-fit:contain to show the whole frame */}
+.stv-shade{position:absolute;inset:0;pointer-events:none;background:
+  linear-gradient(180deg,rgba(4,10,28,.85) 0,rgba(4,10,28,0) 16%),
+  linear-gradient(0deg,rgba(4,10,28,.85) 0,rgba(4,10,28,0) 22%),
+  linear-gradient(90deg,rgba(4,10,28,.72) 0,rgba(4,10,28,.2) 45%,rgba(4,10,28,0) 70%)}
+.stv-copy{position:absolute;left:clamp(18px,6vw,96px);top:50%;transform:translateY(-50%);width:min(460px,calc(100% - 36px));padding:28px 32px;border-radius:var(--radius)}
+.stv-copy.reveal{transform:translateY(calc(-50% + 40px))}
+.stv-copy.reveal.in{transform:translateY(-50%)}
+.stv-copy h2{font-size:clamp(1.8rem,3.4vw,2.6rem);margin-bottom:14px}
+.stv-copy p{color:var(--muted)}
+.stv-hint{margin-top:18px;font-size:.8rem;letter-spacing:.08em;text-transform:uppercase;color:var(--gold-2)!important;transition:opacity .5s}
+.stv.playing .stv-hint,.stv.done .stv-hint{opacity:0}
+.stv .ai-cap{top:auto;bottom:16px;right:16px}
+
 /* 1) Reveal */
-.rv-stage{position:absolute;inset:0;cursor:crosshair;touch-action:pan-y;--x:50%;--y:50%;--r:0px}
-.rv-over{-webkit-mask-image:radial-gradient(circle at var(--x) var(--y),transparent 0,transparent calc(var(--r)*.58),#000 var(--r));
-  mask-image:radial-gradient(circle at var(--x) var(--y),transparent 0,transparent calc(var(--r)*.58),#000 var(--r))}
+.rv-stage{position:absolute;inset:0;cursor:crosshair;touch-action:pan-y;--reveal-x:50%;--reveal-y:50%;--reveal-r:0px}
+/* FRONT = .rv-over (day), REVEAL = .rv-under (blackout). Soft radial mask on FRONT, centred on the cursor. */
+.rv-over{-webkit-mask-image:radial-gradient(circle at var(--reveal-x) var(--reveal-y),transparent 0,transparent calc(var(--reveal-r)*.58),#000 var(--reveal-r));
+  mask-image:radial-gradient(circle at var(--reveal-x) var(--reveal-y),transparent 0,transparent calc(var(--reveal-r)*.58),#000 var(--reveal-r))}
 .rv-hint,.ms-hint{position:absolute;left:50%;bottom:16px;transform:translateX(-50%);z-index:4;padding:8px 16px;border-radius:999px;font-size:.86rem;white-space:nowrap;
   background:rgba(4,10,28,.55);border:1px solid rgba(255,255,255,.14);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);transition:opacity .5s;pointer-events:none}
 .rv-stage.active .rv-hint{opacity:0}
@@ -207,14 +228,15 @@ html.gl-off #scene,html.gl-off .scene-fallback{opacity:0}
 .ms{cursor:ew-resize;touch-action:pan-y}
 .ms.touched .ms-hint{opacity:0}
 .ms-track{position:absolute;left:0;right:0;bottom:0;height:3px;z-index:4;background:rgba(255,255,255,.12)}
-.ms-track span{display:block;height:100%;width:50%;background:linear-gradient(90deg,#ffd27a,#ff8a3d)}
+.ms-track span{display:block;height:100%;width:100%;transform:scaleX(.5);transform-origin:0 50%;background:linear-gradient(90deg,#ffd27a,#ff8a3d)}
 .ms.rm .ms-hint,.ms.rm .ms-track{display:none}
 .ms.rm{cursor:default}
 
 /* 4) Scroll scrub */
 .scrub{position:relative;z-index:2;height:320vh}
 .scrub-sticky{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;background:#060d24}
-.scrub-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 50%}
+.scrub-video{position:absolute;inset:0;width:100%;height:100%;object-position:50% 50%;
+  object-fit:cover; /* or object-fit:contain to avoid cropping on portrait screens */}
 .scrub-shade{position:absolute;inset:0;pointer-events:none;background:
   linear-gradient(180deg,rgba(4,10,28,.85) 0,rgba(4,10,28,0) 16%),
   linear-gradient(0deg,rgba(4,10,28,.7) 0,rgba(4,10,28,0) 28%),
@@ -224,7 +246,7 @@ html.gl-off #scene,html.gl-off .scene-fallback{opacity:0}
 .step{grid-area:1/1;font-size:clamp(1.6rem,3vw,2.4rem);opacity:0;transform:translateY(14px);transition:opacity .6s ease,transform .6s ease}
 .step.is-on{opacity:1;transform:none}
 .scrub-bar{height:3px;margin-top:22px;border-radius:3px;background:rgba(255,255,255,.15);overflow:hidden}
-.scrub-bar span{display:block;height:100%;width:0;background:linear-gradient(90deg,#ffd27a,#ff8a3d)}
+.scrub-bar span{display:block;height:100%;width:100%;transform:scaleX(0);transform-origin:0 50%;background:linear-gradient(90deg,#ffd27a,#ff8a3d)}
 .scrub-hint{margin-top:12px;font-size:.8rem;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;transition:opacity .5s}
 .scrub.scrolled .scrub-hint{opacity:0}
 .scrub .ai-cap{top:auto;bottom:16px;right:16px}
@@ -279,3 +301,11 @@ html.gl-off #scene,html.gl-off .scene-fallback{opacity:0}
   .scrub .ai-cap{top:84px;bottom:auto;right:12px}
   .scrub-video{object-position:48% 50%}
 }
+
+@media (max-width:768px){
+  .stv-copy,.stv-copy.reveal,.stv-copy.reveal.in{left:16px;right:16px;width:auto;top:auto;bottom:24px;transform:none;padding:20px 22px}
+  .stv-copy .ticks{display:none}
+  .stv .ai-cap{top:84px;bottom:auto;right:12px}
+}
+@media (prefers-reduced-motion:reduce){ .stv-copy.reveal,.stv-copy.reveal.in{transform:translateY(-50%)} }
+@media (prefers-reduced-motion:reduce) and (max-width:768px){ .stv-copy.reveal,.stv-copy.reveal.in{transform:none} }
